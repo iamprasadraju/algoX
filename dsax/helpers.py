@@ -78,10 +78,10 @@ def _timeit(func, *args, **kwargs):
 def generate(lower_limit=None, upper_limit=None, step = 10):
 	if lower_limit is None:
 		lower_limit = step
-	else:
-		
+	if upper_limit is None:
+		upper_limit = N
 	
-	sizes = [i for i in range(lower_limit, upper_limit, step)]
+	sizes = [i for i in range(lower_limit, upper_limit + 1, step)]
 	for size in sizes:
 		arr = [random.randint(1, N * N) for _ in range(size)]
 		yield size, arr
