@@ -24,10 +24,10 @@ def animate(func):
 		times = []
 		if DEBUG == 0:
 			for size, t in func(*args, **kwargs):
-				size_format = MAGENTA + func.__name__ + GREY + "_" + YELLOW + "N" +  GREY + "_" + RESET + GREEN + str(size) + " " 
-				time_format = "        " + GREY + str(t) + RESET + " ms"
+				size_format = MAGENTA + func.__name__ + GREY + "_" + YELLOW + "N" +  GREY + "_" + RESET + CYAN + str(size) 
+				time_format = "        " + GREY + str(t) + RESET + " sec"
 				print(size_format, time_format)
-				time.sleep(0.5)
+				time.sleep(0.2)
 				
 		elif DEBUG == 1:
 			for size, t in func(*args, **kwargs):
@@ -40,7 +40,7 @@ def animate(func):
 			fig.canvas.manager.set_window_title("dsaX")
 			ax.set_title(f"Performance of {func.__name__}", fontsize=14, weight="bold")
 			ax.set_xlabel("Input Size (N)", fontsize=12)
-			ax.set_ylabel("Time (milli seconds)", fontsize=12)
+			ax.set_ylabel("Time (Seconds)", fontsize=12)
 			ax.grid(True, alpha=0.3)
 			
 			line, = ax.plot([], [], linewidth=2.5, label=func.__name__)
@@ -67,12 +67,12 @@ def animate(func):
 	return wrapper
 
 def _timeit(func, *args, **kwargs):
-	st = time.monotonic_ns()
+	st = time.monotonic()
 	func(*args, **kwargs)
-	et = time.monotonic_ns()
+	et = time.monotonic()
 	
-	t = (et - st) / 1e6 # milli-seconds 
-	return et - st
+	t = (et - st) # Seconds 
+	return t
 
 
 def generate(lower_limit=None, upper_limit=None, step = 10):
