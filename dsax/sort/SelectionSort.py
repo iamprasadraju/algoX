@@ -6,7 +6,8 @@ def selection_sort(arr: list[int], reverse=False) -> list[int]:
 			for j in range(i+1, n):
 				if arr[j] > arr[idx]:
 					idx = j
-			arr[i], arr[idx] = arr[idx], arr[i]
+			if idx != i:
+				arr[i], arr[idx] = arr[idx], arr[i]
 		return arr
 	else:
 		for i in range(n):
@@ -14,7 +15,8 @@ def selection_sort(arr: list[int], reverse=False) -> list[int]:
 			for j in range(i+1, n):
 				if arr[j] < arr[idx]:
 					idx = j
-			arr[i], arr[idx] = arr[idx], arr[i]
+			if idx != i:
+				arr[i], arr[idx] = arr[idx], arr[i]
 		return arr
 	
 	
