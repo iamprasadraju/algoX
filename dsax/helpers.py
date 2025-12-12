@@ -75,7 +75,7 @@ def _timeit(func, *args, **kwargs):
 	return t
 
 
-def generate(lower_limit=None, upper_limit=None, step = 10):
+def generate(lower_limit=None, upper_limit=None, step = 10, sort=False):
 	if lower_limit is None:
 		lower_limit = step
 	if upper_limit is None:
@@ -84,4 +84,7 @@ def generate(lower_limit=None, upper_limit=None, step = 10):
 	sizes = [i for i in range(lower_limit, upper_limit + 1, step)]
 	for size in sizes:
 		arr = [random.randint(1, N * N) for _ in range(size)]
-		yield size, arr
+		if not sort:
+			yield size, arr
+		else:
+			yield size, sorted(arr)
