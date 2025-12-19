@@ -19,92 +19,96 @@ DEBUG = int(os.environ.get("DEBUG", 0))
 N = int(os.environ.get("N",1024))
 
 def animate(func):
-	def wrapper(*args, **kwargs):
-		if DEBUG == 0:
-			for size, t, mem in func(*args, **kwargs):
-				size_format = MAGENTA + func.__name__ + GREY + "_" + YELLOW + "N" +  GREY + "_" + RESET + CYAN + str(size) 
-				time_format = "        " + GREY + f"{t*1000:.4f}" + RESET + " ms"
-				mem_format = "        " + GREEN + f"{mem/1024:.2f} KiB"
-				
-				print(size_format, time_format, mem_format)
-				time.sleep(0.1)
-				
-		elif DEBUG == 1:
-			import matplotlib.pyplot as plt
-			from matplotlib.animation import FuncAnimation
-			
-			sizes = []
-			times = []
-			for size, t, _ in func(*args, **kwargs):
-				sizes.append(size)
-				times.append(t)
-			
-			plt.style.use("ggplot")
-			
-			fig, ax = plt.subplots(figsize=(8, 5))
-			fig.canvas.manager.set_window_title("dsaX")
-			ax.set_title(f"Performance of {func.__name__}", fontsize=14, weight="bold")
-			ax.set_xlabel("Input Size (N)", fontsize=12)
-			ax.set_ylabel("Time (Seconds)", fontsize=12)
-			ax.grid(True, alpha=0.3)
-			
-			line, = ax.plot([], [], linewidth=2.5, label=func.__name__)
-			ax.legend()
+    def wrapper(*args, **kwargs):
+        if DEBUG == 0:
+            for size, t, mem in func(*args, **kwargs):
+                size_format = (
+                    MAGENTA + func.__name__ +
+                    GREY + "_" + YELLOW + "N" +
+                    GREY + "_" + RESET + CYAN + str(size)
+                )
+                time_format = "        " + GREY + f"{t*1000:.4f}" + RESET + " ms"
+                mem_format = "        " + GREEN + f"{mem/1024:.2f} KiB"
 
-			def update(frame):
-				line.set_data(sizes[:frame], times[:frame])
-				ax.set_xlim(0, max(sizes))
-				ax.set_ylim(0, max(times) * 1.1)
-				return line,
-				
-			# IMPORTANT: store animation in a variable
-			anim = FuncAnimation(
-			fig,
-			update,
-			frames=len(sizes),
-			interval=50,
-			blit=False
-			)
-			
-			plt.tight_layout()
-			plt.show()
-		elif DEBUG == 2:
-			import matplotlib.pyplot as plt
-			from matplotlib.animation import FuncAnimation
-			for size, t in func(*args, **kwargs):
-				sizes.append(size)
-				times.append(t)
-			
-			plt.style.use("ggplot")
-			
-			fig, ax = plt.subplots(figsize=(8, 5))
-			fig.canvas.manager.set_window_title("dsaX")
-			ax.set_title(f"Performance of {func.__name__}", fontsize=14, weight="bold")
-			ax.set_xlabel("Input Size (N)", fontsize=12)
-			ax.set_ylabel("Time (Seconds)", fontsize=12)
-			ax.grid(True, alpha=0.3)
-			
-			line, = ax.plot([], [], linewidth=2.5, label=func.__name__)
-			ax.legend()
+                print(size_format, time_format, mem_format)
+                time.sleep(0.1)
 
-			def update(frame):
-				line.set_data(sizes[:frame], times[:frame])
-				ax.set_xlim(0, max(sizes))
-				ax.set_ylim(0, max(times) * 1.1)
-				return line,
-				
-			# IMPORTANT: store animation in a variable
-			anim = FuncAnimation(
-			fig,
-			update,
-			frames=len(sizes),
-			interval=50,
-			blit=False
-			)
-			
-			plt.tight_layout()
-			plt.show()
-	return wrapper
+        elif DEBUG == 1:
+            import matplotlib.pyplot as plt
+            from matplotlib.animation import FuncAnimation
+
+            sizes = []
+            times = []
+            mems = []
+
+            # Collect benchmark data
+            for size, t, mem in func(*args, **kwargs):
+                sizes.append(size)
+                times.append(t * 1000)   # ms
+                mems.append(mem / 1024)  # KiB
+
+            if not sizes:
+                print("No data to plot.")
+                return
+
+            plt.style.use("ggplot")
+
+            fig, ax_time = plt.subplots(figsize=(8, 5))
+            fig.canvas.manager.set_window_title("dsaX")
+
+            ax_mem = ax_time.twinx()  # SECOND Y-AXIS
+
+            ax_time.set_title(
+                f"Time & Memory Performance of {func.__name__}",
+                fontsize=14,
+                weight="bold"
+            )
+
+            ax_time.set_xlabel("Input Size (N)", fontsize=12)
+            ax_time.set_ylabel("Time (ms)", fontsize=12, color="tab:blue")
+            ax_mem.set_ylabel("Memory (KiB)", fontsize=12, color="tab:red")
+
+            ax_time.grid(False)
+            ax_mem.grid(False)
+
+            # Axis limits
+            ax_time.set_xlim(0, max(sizes))
+            ax_time.set_ylim(0, max(times) * 1.1)
+            ax_mem.set_ylim(0, max(mems) * 1.1)
+
+            # Lines
+            line_time, = ax_time.plot(
+                [], [], linewidth=2.5, label="Time (ms)", color="tab:blue"
+            )
+            line_mem, = ax_mem.plot(
+                [], [], linewidth=2.5, linestyle="--",
+                label="Memory (KiB)", color="tab:red"
+            )
+
+            # Legends
+            ax_time.legend(loc="upper left")
+            ax_mem.legend(loc="upper right")
+
+            # Animation update
+            def update(frame):
+                line_time.set_data(sizes[:frame], times[:frame])
+                line_mem.set_data(sizes[:frame], mems[:frame])
+                return line_time, line_mem
+
+            anim = FuncAnimation(
+                fig,
+                update,
+                frames=len(sizes),
+                interval=50,
+                blit=False
+            )
+
+            plt.tight_layout()
+            plt.show()
+
+    return wrapper
+
+
 
 def timeit(func, *args, **kwargs):
 	st = time.perf_counter() # perf_counter() highly accurate
