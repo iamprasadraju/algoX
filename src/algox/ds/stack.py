@@ -1,4 +1,3 @@
-
 # Stack (list) 
 class Stack:
 	def __init__(self, arr=None):
@@ -6,7 +5,7 @@ class Stack:
 		self.len = len(self._stack)
 	
 	def pop(self):
-		if self.len == 0:
+		if self.is_empty():
 			raise IndexError("Stack is empty")
 		self.len -= 1
 		return self._stack.pop(0)
@@ -14,43 +13,57 @@ class Stack:
 	def push(self, data):
 		self._stack.append(data)
 		self.len += 1
+	
+	def peek(self):
+		if is_empty():
+			return
+		return self._stack[0]
+		
+	def is_empty(self):
+		return self.len == 0
 		
 	def __repr__(self):
-		return f"Stack({self._stack})"
+		stack_contents = "\n".join(f"[{repr(item)}]" for item in self._stack)
+		return "Stack(\n" + stack_contents + "\n)"
 		
 	def __len__(self):
 		return self.len
 		
 	def __iter__(self):
-		pass
+		if self.is_empty():
+			return
+		for element in self._stack:
+			yield element
 		
 
-class Node:
+class Node:  # acts like pointer
 	def __init__(self, data):
 		self.data = data
 		self.next = None
-		
+
+
+# Stack using Linkedlist	
 class LinkedStack:
 	def __init__(self, arr=None):
 		self.len = 0
 		self.head = None
+		self.tail = None
 		
 		if arr:
 			self.build(arr)
 			
-	def build(self, arr):
+	def build(self, arr): # O(n)
 		if not arr: return None
-		self.head = Node(arr[0])
+		self.head = self.tail = Node(arr[0])
 		self.len = 1
-		current = self.head
 		
 		for element in arr[1:]:
 			new_node = Node(element)
-			current.next = new_node
-			current = new_node
+			self.tail.next = new_node
+			self.tail = new_node
 			self.len += 1
 	
-	def pop(self):
+	def pop(self): # O(1)
 		if self.head is None:
 			return
 		
@@ -60,13 +73,23 @@ class LinkedStack:
 		return current.data
 		
 			
-	def push(self, data):
+	def push(self, data): # O(1)
 		if self.head is None:
 			return
 		new_node = Node(data)
 		new_node.next = self.head
 		self.head = new_node
 		self.len += 1
+		
+	def peek(self): # O(1)
+		if self.head is None:
+			return 
+		top = self.head
+		return top.data
+	
+	def is_empty(self):
+		return self.len == 0
+		
 		
 	def __repr__(self):
 		if self.head is None:
