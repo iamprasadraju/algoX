@@ -74,11 +74,11 @@ class LinkedStack:
 		
 			
 	def push(self, data): # O(1)
-		if self.head is None:
-			return
 		new_node = Node(data)
 		new_node.next = self.head
 		self.head = new_node
+		if self.len == 0:
+			self.tail = new_node
 		self.len += 1
 		
 	def peek(self): # O(1)
@@ -103,11 +103,7 @@ class LinkedStack:
 		return "Stack(\n" + str + ")"
 		
 	def __iter__(self):
-		if self.head is None:
-			return None
-			
 		current = self.head
-		
 		while current:
 			data = current.data
 			current = current.next
