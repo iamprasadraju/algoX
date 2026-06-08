@@ -6,7 +6,7 @@
 </picture>
 
 <p style="margin: 2px 0 0 0;">
-  <strong>No dependencies. Just Python. All you need.</strong>
+  AlgoX brings STL-style data structures and algorithms to Python with a native C backend.
 </p>
 
 ![Project Status](https://img.shields.io/badge/status-under%20development-orange)
@@ -16,7 +16,6 @@
 
 ---
 
-**algoX** is a Python library — a collection of data structures and algorithms, all implemented in pure Python.
-
+**AlgoX** is a C-powered algorithms and data structures library for Python. It provides STL-inspired containers, generic algorithms, and low-overhead implementations designed for performance, learning, and experimentation.
 
 
