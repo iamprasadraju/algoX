@@ -1,14 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/docs/algoX-light.png">
-  <source media="(prefers-color-scheme: light)" srcset="/docs/algoX-dark.png">
-  <img
-    alt="algoX logo"
-    src="/docs/algoX-light.png"
-    width="50%"
-    style="margin-bottom: 0;"
-  >
+  <source media="(prefers-color-scheme: light)" srcset="docs/algox.svg">
+  <img alt="tiny corp logo" src="docs/algox.svg" width="50%" height="50%">
 </picture>
 
 <p style="margin: 2px 0 0 0;">
