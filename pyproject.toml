@@ -1,10 +1,10 @@
 [project]
 name = "algox"
 version = "0.1.0"
-description = "A collection of data structures and algorithms, all implemented in pure Python"
+description = "AlgoX is a C-powered algorithms and data structures library for Python. It provides STL-inspired containers, generic algorithms, and low-overhead implementations designed for performance, learning, and experimentation."
 
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 authors = [{ name = "Prasad Raju G" }]
 
 dependencies = []
@@ -13,13 +13,10 @@ dependencies = []
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-package-dir = { "" = "src" }
-
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
 
 [project.optional-dependencies]
 perf = [
-    "matplotlib>=3.10.8",
+    "matplotlib",
 ]
