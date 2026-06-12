@@ -64,3 +64,7 @@ V.capacity = 20;
 
 * void * - 
 
+**compiling with include for testing (run from : _core/)**
+```bash
+clang -Iinclude src/containers/linked_list.c -o linked_list
+```
