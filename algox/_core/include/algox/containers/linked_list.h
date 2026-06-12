@@ -18,8 +18,26 @@ typedef struct LinkedList {
 LinkedList *ll_new(void);
 void ll_free(LinkedList *list);
 
-/* operations/interface */
-void ll_append(LinkedList *list, void *data); // post-append (add to tail)
-void ll_prepend(LinkedList *list, void *data); // pre-append (add to head)
+// -----------------------
+// operations/interface 
+// -----------------------
+
+// post-append (add element to tail)
+void ll_append(LinkedList *list, void *data);
+// pre-append (add element to head)
+void ll_prepend(LinkedList *list, void *data);
+
+// Remove and return the last element of the container.
+// Returns:  The removed element.
+void ll_pop_front(LinkedList *list); // Removes the first element and returns it
+
+// Remove and return the last element of the container.
+// The removed element.
+void ll_pop_back(LinkedList *list);
+
+void ll_peek_front(); // Return the first element without removing it.
+void ll_peek_back();  // Return the last element without removing it.
+
+void 
 
 #endif
