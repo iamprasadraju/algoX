@@ -1,0 +1,6 @@
+#ifndef ALGOX_CONTAINERS_STACK_H
+#define ALGOX_CONTAINERS_STACK_H
+
+
+
+#endif

@@ -1,4 +1,5 @@
-#### Linked List
+## Linked List
+---
 
 **FOR COMPILING (run at _core/)**
 
@@ -22,3 +23,5 @@ size of Node;
 | `void *data` | 8 bytes |
 | `Node *next` | 8 bytes |
 | **Total** | **16 bytes** |
+
+

@@ -1,0 +1,6 @@
+#ifndef ALGOX_CONTAINERS_QUEUE_H
+#define ALGOX_CONTAINERS_QUEUE_H
+
+
+
+#endif

@@ -1,0 +1,6 @@
+#ifndef ALGOX_CONTAINERS_ARRAY_H
+#define ALGOX_CONTAINERS_ARRAY_H
+
+
+
+#endif
