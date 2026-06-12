@@ -7,17 +7,15 @@
 
 #### C backend - Python Wrapper
 
- * CPython C Extension (uses numpy) [fastest / efficient]
+```mermaid
+flowchart TD
+    A["Python User<br/>global imports"]
+        --> B["Python API (.py)<br/>algox/*.py"]
+        --> C["Binding (.c)<br/>only place with PyObject*<br/>algox/_core/bindings"]
+        --> D["Core (.c/.h)<br/>no PyObject*<br/>algox/_core/src & algox/_core/include"]
 
-    Python User -> [global imports]
-        ↓
-    Python API (.py) -> [algox/.py]
-        ↓
-    Binding (.c)   ← only place with PyObject * -> [algox/_core/bindings]
-        ↓
-    Core (.c/.h)   ← no PyObject * -> [algox/_core/src & algox/_core/include]
- 
-    (Algox follows same architecture)
+    T["CPython C Extension (uses NumPy)<br/>fastest / efficient"] -.-> B
+```
 
  ``` 90% - C; 10% - CPython ```
 
