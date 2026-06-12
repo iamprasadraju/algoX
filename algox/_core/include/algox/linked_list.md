@@ -34,3 +34,6 @@ size of Node;
 * .pop_back(LinkedList *list) - Remove and return the last element of the container. -> T complex: O(1)
 * .insert_at(LinkedList *list, int index) - Insert an element at position(index) -> T complex: O(n)
 * .pop_at / remove_at (LinkedList *list, int index) - Remove an element at position -> T complex: O(n)
+* .peek_first(LinkedList *list) - return first element in container -> T complex: O(1)
+* .peek_back(LinkedList *list) - return last element in container -> T complex: O(1)
+
